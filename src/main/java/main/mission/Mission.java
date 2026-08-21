@@ -22,5 +22,10 @@ public class Mission {
     public void setWeather(String weather){ this.weather=weather; }
     public RangeCategory getRangeCategory() { return rangeCategory; }
     public void setRangeCategory(RangeCategory rangeCategory){ this.rangeCategory=rangeCategory; }
+
+    @Override
+    public String toString() {
+        return missionType + " Görevi (" + rangeCategory + " menzilli)";
+    }
 }
 

@@ -9,5 +9,13 @@ public class MultipleTarget extends Target {
 
     @Override
     public void track() {
-        System.out.println(name + " konvoyu " + targetCount + " adet alt hedeften oluşuyor.");    }
+        System.out.println(name + " konvoyu " + targetCount + " adet alt hedeften oluşuyor.");
+    }
+
+    @Override
+    public String toString() {
+        return name + " konvoyu " + targetCount + " adet alt hedeften oluşuyor.";
+    }
+
+
 }

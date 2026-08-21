@@ -2,7 +2,7 @@ package main.munition;
 
 public class HeavyMunition extends Munition {
     private double explosiveAmount;
-    public HeavyMunition(String id, String name, double numberOfMunition, double explosiveAmount) {
+    public HeavyMunition(String id, String name, int numberOfMunition, double explosiveAmount) {
         super(id, name, numberOfMunition);
         this.explosiveAmount = explosiveAmount;
     }

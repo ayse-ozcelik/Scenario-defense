@@ -11,4 +11,8 @@ public class ThermalSensor extends Sensor {
     public void scan() {
         System.out.println(name + " ısı imzası algılama modu aktif (Hassasiyet: " + minTemperatureSensitivity + "°C).");
     }
+    @Override
+    public String toString() {
+        return name + " ısı imzası algılama modu aktif (Hassasiyet: " + minTemperatureSensitivity + "°C).";
+    }
 }

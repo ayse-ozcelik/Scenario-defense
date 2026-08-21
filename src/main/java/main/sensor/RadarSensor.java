@@ -10,4 +10,10 @@ public class RadarSensor extends Sensor {
     @Override
     public void scan(){
         System.out.println(name + ", " + operatingFrequency + " GHz frekansında radar taraması yapıyor.");    }
+    @Override
+    public String toString(){
+        return name + ", " + operatingFrequency + " GHz frekansında radar taraması yapıyor.";
+
+    }
 }
+

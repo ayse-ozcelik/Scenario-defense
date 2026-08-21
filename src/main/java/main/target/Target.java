@@ -33,6 +33,5 @@ public abstract class Target {
     }
 
 
-//Get set methodlarını yaz
 
 }

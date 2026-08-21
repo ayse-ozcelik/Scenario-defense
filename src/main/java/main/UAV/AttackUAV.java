@@ -12,4 +12,9 @@ public class AttackUAV extends UAV {
     public void fly() {
         System.out.println(name + " taarruz İHA'sı " + missileCapacity + " adet mühimmat ile devriye atıyor.");
     }
+
+    @Override
+    public String toString() {
+        return name + " taarruz İHA'sı " + missileCapacity + " adet mühimmat ile devriye atıyor.";
+    }
 }

@@ -11,4 +11,10 @@ public class ReconUAV extends UAV {
     public void fly() {
         System.out.println(name + " keşif İHA'sı " + maxFlightAltitude + " metre irtifada istihbarat topluyor.");
     }
+
+    @Override
+    public String toString(){
+        return name + " keşif İHA'sı " + maxFlightAltitude + " metre irtifada istihbarat topluyor.";
+
+    }
 }

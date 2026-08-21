@@ -11,4 +11,8 @@ public class FixedTarget extends Target {
     public void track() {
         System.out.println(name + " (" + structureType + ") sabit hedefi koordinatlarında tespit edildi.");
     }
+    @Override
+    public String toString() {
+        return name + " (" + structureType + ") sabit hedefi koordinatlarında tespit edildi.";
+    }
 }

@@ -5,15 +5,41 @@ import main.sensor.Sensor;
 import java.util.*;
 
 public abstract class UAV {
-
     protected String id;
     protected String name;
     protected double maxWeightCapacity; //azami taşıma kapasitesi
     protected double maxSpeed;
     protected List<Sensor> sensors;
+    protected List<Munition> munitions; //list tanımlama
+
+
+    public String getName() { return name; }
+
+    public void setName(String name) { this.name = name; }
+
+    public String getId() { return id; }
+
+    public void setId(String id) { this.id = id; }
+
+
+    public double getMaxWeightCapacity() { return maxWeightCapacity; }
+
+    public void setMaxWeightCapacity(double maxWeightCapacity) { this.maxWeightCapacity = maxWeightCapacity; }
+
+
+    public double getMaxSpeed() { return maxSpeed; }
+
+    public void setMaxSpeed(double maxSpeed) { this.maxSpeed = maxSpeed; }
+
+    public void setSensors(List<Sensor> sensors) { this.sensors = sensors; }
+
+
+    public List<Munition> getMunitions() { return munitions; }
+
+    public void setMunitions(List<Munition> munitions) { this.munitions = munitions; }
+
     //sensors adlı liste değişkeninde Sensors türünde nesneler bulunsun
     //<Sensors> bir generictir. Liste içine başka veri tipi(metin ya da sayı) girmesini engeller
-    protected List<Munition> munitions; //list tanımlama
 
     public UAV(String id, String name, double maxWeightCapacity, double maxSpeed ){
         this.id=id;
@@ -43,11 +69,9 @@ public abstract class UAV {
         //Sensor tipinde olmalı ve geçici değişken adı da sensor olmalı demek
         this.munitions.add(munition);
     }
-    public List<Sensor> getSensors(){
-        return sensors;
+    public List<Sensor> getSensors(){ return sensors;
     //bu method dışarıya sensors isimli bir liste döneceği için gövdeye List yazdık.
     //tipi de Sensor olacak (class adı) (bu liste elemanlarının tipi Sensor sınıfıdır demek.)
-
     }
     public abstract void fly();
     //abstract method, abstract class bunu yazmak (overrride etmek) zorunda.

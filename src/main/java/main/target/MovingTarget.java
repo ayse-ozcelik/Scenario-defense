@@ -11,4 +11,10 @@ public class MovingTarget extends Target {
     public void track() {
         System.out.println(name + " hareketli hedefi " + speed + " km/s hızla ilerliyor.");
     }
+
+    @Override
+    public String toString() {
+        return name + " hareketli hedefi " + speed + " km/s hızla ilerliyor.";
+    }
+
 }

@@ -3,7 +3,7 @@ package main.munition;
 public class GuidedMunition extends Munition {
     private String guidanceType;
 
-    public GuidedMunition(String id, String name, double numberOfMunition, String guidanceType) {
+    public GuidedMunition(String id, String name, int numberOfMunition, String guidanceType) {
         super(id, name, numberOfMunition);
         this.guidanceType = guidanceType;
     }
