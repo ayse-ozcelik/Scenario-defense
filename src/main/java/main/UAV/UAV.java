@@ -1,10 +1,11 @@
 package main.UAV;
 import main.munition.Munition;
 import main.sensor.Sensor;
+import main.target.Target;
 
 import java.util.*;
 
-public abstract class UAV {
+public abstract class UAV implements Cloneable {
     protected String id;
     protected String name;
     protected double maxWeightCapacity; //azami taşıma kapasitesi
@@ -67,6 +68,25 @@ public abstract class UAV {
         System.out.println("Sensor id: "+id+ "\nName: "+name+"\nMax Weight Capacity: "+maxWeightCapacity+"\nMax Speed: "+maxSpeed);
     }
 
+    @Override
+    public UAV clone() {
+        UAV uav = null;
+        try {
+            uav = (UAV) super.clone();
+
+            uav.sensors = new ArrayList<>();
+            for (Sensor s : this.sensors) {
+                uav.sensors.add(s.clone());
+            }
+            uav.munitions = new ArrayList<>();
+            for (Munition s : this.munitions) {
+                uav.munitions.add(s.clone());
+            }
+            return uav;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException("An error occurred while copying the UAV", e);
+        }
+    }
 
 
 }

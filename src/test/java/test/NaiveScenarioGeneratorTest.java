@@ -79,22 +79,27 @@ public class NaiveScenarioGeneratorTest {
 
     @Test
     public void testScenarioBuilderCreatesValidScenario(){
-         Mission mission = new Mission(MissionType.ATTACK, "Standart Durum", "Açık Hava", RangeCategory.SHORT);
-         Target target = TargetFactory.createTarget("FIXED", "T-1", "Sığınak", 32.0);
+        Mission mission = new Mission(MissionType.ATTACK, "Standart Durum", "Açık Hava", RangeCategory.SHORT);
 
-         AttackMissionComponentFactory factory = new AttackMissionComponentFactory();
-         UAV uav = factory.createUAV();
+        TargetFactory targetFactory = new TargetFactory();
+        Target target = targetFactory.createFixedTarget();
+        target.setId("T-1");
+        target.setName("Sığınak");
+        target.setSafetyDistance(32.0);
 
-         Scenario scenario =new Scenario.ScenarioBuilder()
-                         .setMission(mission)
-                         .addTarget(target)
-                         .addUAV(uav)
-                         .build();
+        AttackMissionComponentFactory factory = new AttackMissionComponentFactory();
+        UAV uav = factory.createUAV();
 
-         assertNotNull(scenario);
-         assertEquals(mission,scenario.getMission());
-         assertEquals(1,scenario.getUavs().size());
-     }
+        Scenario scenario = new Scenario.ScenarioBuilder()
+                .setMission(mission)
+                .addTarget(target)
+                .addUAV(uav)
+                .build();
+
+        assertNotNull(scenario);
+        assertEquals(mission, scenario.getMission());
+        assertEquals(1, scenario.getUavs().size());
+    }
 
      @Test
      public void testScenarioManagerIsSıngleton(){

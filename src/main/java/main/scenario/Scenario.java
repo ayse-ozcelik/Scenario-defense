@@ -2,8 +2,10 @@ package main.scenario;
 import java.util.*;
 import main.mission.Mission;
 import main.UAV.UAV;
+import main.munition.Munition;
+import main.sensor.Sensor;
 import main.target.Target;
-public class Scenario {
+public class Scenario implements Cloneable{
     private List<UAV> uavs;
     private Mission mission;
     private List<Target> targets;
@@ -98,5 +100,25 @@ public class Scenario {
                 "target: "+targets;
     }
 
+    @Override
+    public Scenario clone() {
+        Scenario scenario = null;
+        try {
+            scenario = (Scenario) super.clone();
+
+            scenario.uavs = new ArrayList<>();
+            for (UAV u : this.uavs) {
+                scenario.uavs.add(u.clone());
+            }
+
+            scenario.targets = new ArrayList<>();
+            for (Target t : this.targets) {
+                scenario.targets.add(t.clone());
+            }
+
+            return scenario;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException("An error occurred while copying the Scenario", e);
+        }
+    }
 }
-//buradaki yorum satırlarını daha sonra kaldıracağım

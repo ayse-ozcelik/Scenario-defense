@@ -1,6 +1,8 @@
 package main.munition;
 
-public abstract class Munition {
+import main.sensor.Sensor;
+
+public abstract class Munition implements Cloneable{
     protected String id;
     protected String name;
     protected int numberOfMunition;
@@ -31,6 +33,18 @@ public abstract class Munition {
 
     public void printInfo(){
         System.out.println("Munition id: "+id+ "\nName: "+name+"\nNumber Of Munition: "+numberOfMunition);
+    }
+
+    @Override
+    public Munition clone() {
+        Munition munition = null;
+        try {
+            munition = (Munition) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException("An error occurred while copying the munition", e);
+        }
+
+        return munition;
     }
 
 }

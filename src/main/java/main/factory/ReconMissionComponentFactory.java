@@ -9,14 +9,17 @@ import main.sensor.Sensor;
 public class ReconMissionComponentFactory implements IMissionComponentFactory{
     public ReconMissionComponentFactory(){}
 
-    @Override
-    public UAV createUAV() {
-        return new ReconUAV("UAV-RECON", "Anka-S", 220.0, 300.0,5000.0);
-    }
+
+    private static final UAV prototypeUAV = new ReconUAV("UAV-RECON", "Anka-S", 220.0, 300.0,5000.0);
+    private static final Sensor prototypeSensor = new EOSensor("S-E0SENSOR", "Electro Optic ", 50.0, 100.0, 30.0);
 
     @Override
+    public UAV createUAV() {
+        return prototypeUAV;
+    }
+    @Override
     public Sensor createSensor() {
-        return new EOSensor("S-E0SENSOR", "Electro Optic ", 50.0, 100.0, 30.0);
+        return prototypeSensor;
     }
 
     @Override

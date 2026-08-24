@@ -8,18 +8,18 @@ import main.sensor.Sensor;
 import main.sensor.ThermalSensor;
 
 public class PatrolMissionComponentFactory implements IMissionComponentFactory {
-    public PatrolMissionComponentFactory() {
-    }
-
+    public PatrolMissionComponentFactory() {}
+    private static final UAV prototypeUAV = new CarrierUAV("UAV-CARRIER", "Kargo İHA", 150.0, 250.0,4.0);
+    private static final Sensor prototypeSensor = new ThermalSensor("S-THERMAL", "Thermal ",20.0,30.0,20.0);
 
     @Override
     public UAV createUAV() {
-        return new CarrierUAV("UAV-CARRIER", "Kargo İHA", 150.0, 250.0,4.0);
+        return prototypeUAV;
     }
 
     @Override
     public Sensor createSensor() {
-        return new ThermalSensor("S-THERMAL", "Thermal ",20.0,30.0,20.0);
+        return prototypeSensor;
     }
 
     @Override

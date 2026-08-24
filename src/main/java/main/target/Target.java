@@ -1,6 +1,8 @@
 package main.target;
 
-public abstract class Target {
+import main.munition.Munition;
+
+public abstract class Target implements Cloneable {
     protected String id;
     protected String name;
     protected double safetyDistance;
@@ -32,6 +34,17 @@ public abstract class Target {
         System.out.println("Target id: "+id+ "\nName: "+name+"\nSafety Distance: "+safetyDistance);
     }
 
+    @Override
+    public Target clone() {
+        Target target = null;
+        try {
+            target = (Target) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException("An error occurred while copying the target", e);
+        }
+
+        return target;
 
 
+    }
 }

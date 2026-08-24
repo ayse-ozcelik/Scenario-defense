@@ -1,29 +1,38 @@
 package main.validator;
+
 import main.mission.MissionType;
 import main.scenario.Scenario;
 import main.UAV.UAV;
-import main.mission.Mission;
+
 public class ScenarioValidator {
-    public boolean validate(Scenario scenario){
-        if(scenario.getUavs()==null || scenario.getUavs().isEmpty()){
-            System.out.println("İHA bulunamadı");
+
+    public boolean validate(Scenario scenario) {
+        //Güvenlik: Senaryo null ise direkt false döndür
+        if (scenario == null) return false;
+
+        //İHA kontrolü
+        if (scenario.getUavs() == null || scenario.getUavs().isEmpty()) {
+            System.out.println("Can not found the UAV");
             return false;
         }
-        if (scenario.getTargets()==null || scenario.getTargets().isEmpty()){
-            System.out.println("Hedef bulunamadı");
+
+        //Hedef kontrolü
+        if (scenario.getTargets() == null || scenario.getTargets().isEmpty()) {
+            System.out.println("Can not found the target");
             return false;
         }
-        if (scenario.getMission().getMissionType()== MissionType.RECON){
-            for(UAV uav: scenario.getUavs()){
-                if(uav.getMunitions()!=null && !uav.getMunitions().isEmpty()){
-                    System.out.println("Keşif (recon) görevinde mühimmat taşınamaz");
+
+        //Keşif İHA'sı mühimmat taşıyamaz:
+        if (scenario.getMission() != null && scenario.getMission().getMissionType() == MissionType.RECON) {
+            for (UAV uav : scenario.getUavs()) {
+                if (uav.getMunitions() != null && !uav.getMunitions().isEmpty()) {
+                    System.out.println("Munition cannot be carried on a reconnaissance mission");
                     return false;
                 }
             }
         }
 
-
-        System.out.println("Senaryo şimdilik kurallara uygun");
+        System.out.println("The scenario is available, for now");
         return true;
     }
 }
