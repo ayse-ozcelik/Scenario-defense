@@ -5,7 +5,6 @@ import main.scenario.Scenario;
 
 public class main {
     public static void main(String[] args) {
-        // NaiveScenarioGenerator nesnesi oluşturuyoruz
         NaiveScenarioGenerator generator = new NaiveScenarioGenerator();
 
         // Senaryoyu Abstract Factory & Builder ile üretiyoruz

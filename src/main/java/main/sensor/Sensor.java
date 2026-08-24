@@ -1,11 +1,46 @@
 package main.sensor;
 
 public abstract class Sensor {
-
     protected String id;
     protected String name;
     protected double range;
     protected double powerConsumption; //güç tüketimi
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    public double getRange() {
+        return range;
+    }
+
+    public void setRange(double range) {
+        this.range = range;
+    }
+
+
+    public double getPowerConsumption() {
+        return powerConsumption;
+    }
+
+    public void setPowerConsumption(double powerConsumption) {
+        this.powerConsumption = powerConsumption;
+    }
+
+
 
 
     public Sensor(String id, String name, double range, double powerConsumption ){
@@ -23,6 +58,5 @@ public abstract class Sensor {
     }
 
 
-//Get set methodlarını yaz
 
 }

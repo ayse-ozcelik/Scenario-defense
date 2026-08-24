@@ -54,7 +54,7 @@ public class Scenario {
     public void printInfo() {
         System.out.println("Type of mission: " + mission.getMissionType() + "Target: " + targets.size() + "Number of UAV's : " + uavs.size());
     } //mission ve target için ilgili sınıflara eriştik ve get ile değişkenlerini aldık
-    //ama uav için bu sınıfta liste oluşturduğumuz için direkt eriştik ve size ile boyutunu belirledik
+    //ama uav için bu sınıfta liste oluşturduğumuz için direkt eriştik ve size() ile boyutunu belirledik
 
 
     public static class ScenarioBuilder {

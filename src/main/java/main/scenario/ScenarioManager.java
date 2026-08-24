@@ -5,6 +5,7 @@ import main.validator.*;
 
 public class ScenarioManager {
 
+    //singleton mantığıyla çalışan class:
     private ScenarioManager(){}
     private static ScenarioManager instance;
     public Scenario generateScenario(){
@@ -12,9 +13,11 @@ public class ScenarioManager {
         Scenario scenario=naiveScenarioGenerator.generateScenario();
 
         ScenarioValidator validator = new ScenarioValidator();
-        boolean isScenarioValid = validator.validate(scenario);
+        if(validator.validate(scenario)){ //sonuç true ya da false çıkacak
+            return scenario;
+        }else
+            return null;
 
-        return scenario;
     }
 
 

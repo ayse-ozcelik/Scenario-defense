@@ -39,7 +39,7 @@ public class NaiveScenarioGenerator {
         IMissionComponentFactory factory = selectFactory(chosenType);
 
         Target target;
-        int targetType = random.nextInt(3); // 0, 1 veya 2 üretir
+        int targetType = random.nextInt(3);
 
         if (targetType == 0) {
             target = TargetFactory.createTarget("FIXED", "T-1", "Sığınak", 32.0);
@@ -57,65 +57,30 @@ public class NaiveScenarioGenerator {
 
         for (int i= 0; i< uavCount; i++) {
             UAV uav=factory.createUAV();
+            uav.setId(uav.getId()+"-"+(i + 1));
 
-           /* if (chosenType== MissionType.ATTACK) {
-                uav =new AttackUAV("UAV-" + i, "Bayraktar TB2", 220.0, 200.0,4);
-            } else if (chosenType== MissionType.RECON) {
-                uav =new ReconUAV("UAV-" + i, "Anka-S", 220.0, 300.0,5000.0);
-            } else {
-                uav =new CarrierUAV("UAV-" + i, "Kargo İHA", 150.0, 250.0,4.0);
-            }
-
-            */
 
             //sensör için:
             //Mission recon ise EO sensör
             //Mission attack ise attack sensör
             //Mission swarm için ise random bir sensör atanmalı
-            int sensorCount =random.nextInt(3) + 1; //rastgele sensör sayısı
+            int sensorCount =random.nextInt(3) + 1;
             for (int j= 0; j< sensorCount; j++) {
                 Sensor sensor=factory.createSensor();
                 if (sensor != null) {
+                    sensor.setId(sensor.getId()+"-"+(i + 1)+"-"+(j + 1));
                     uav.addSensor(sensor);
                 }
-               /* if (chosenType==MissionType.RECON){
-                    if (random.nextBoolean()) {
-                        sensor = new EOSensor("S-" + j, "Electro Optic ", 50.0, 100.0, 30.0);
-                    }else
-                        sensor=new ThermalSensor("S-"+j, "Thermal ",20.0,30.0,20.0);
-
-                }else if(chosenType==MissionType.ATTACK){
-                    sensor=new RadarSensor("S-"+j, "AESA Radar ",20.0,30.0,430);
-                }else{
-                    int randomSensor = random.nextInt(3);
-                    if (randomSensor == 0) {
-                        sensor = new EOSensor("S-" + j, "Electro Optic", 50.0, 100.0, 30.0);
-                    } else if (randomSensor == 1) {
-                        sensor = new ThermalSensor("S-" + j, "Thermal", 20.0, 30.0, 20.0);
-                    } else {
-                        sensor = new RadarSensor("S-" + j, "AESA Radar", 20.0, 30.0, 430);
-                    }
-                }
-
-                */
             }
+
             int munitionCount = random.nextInt(3);
 
             for (int k = 0; k < munitionCount; k++) {
-                Munition munition=factory.createMunition();
+                Munition munition = factory.createMunition();
                 if (munition != null) {
+                    munition.setId(munition.getId()+ "-" +(i + 1)+"-"+(k + 1));
                     uav.addMunition(munition);
                 }
-                /*
-                if (chosenType == MissionType.RECON) {
-                    continue; //RECONda mühimmat ekleme döngüyü atla
-                } else if (chosenType == MissionType.ATTACK) {
-                    munition = new HeavyMunition("M-" + k, "MK-82", 230, 500);
-                } else {
-                    munition = new LightMunition("M-" + k, "MAM-L", 22, 15);
-                }
-
-                 */
             }
             builder.addUAV(uav);
         }

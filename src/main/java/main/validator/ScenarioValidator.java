@@ -15,7 +15,7 @@ public class ScenarioValidator {
         }
         if (scenario.getMission().getMissionType()== MissionType.RECON){
             for(UAV uav: scenario.getUavs()){
-                if(uav.getMunitions()!=null && uav.getMunitions().isEmpty()){
+                if(uav.getMunitions()!=null && !uav.getMunitions().isEmpty()){
                     System.out.println("Keşif (recon) görevinde mühimmat taşınamaz");
                     return false;
                 }

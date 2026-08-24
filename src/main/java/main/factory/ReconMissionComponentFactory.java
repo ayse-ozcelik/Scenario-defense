@@ -24,5 +24,5 @@ public class ReconMissionComponentFactory implements IMissionComponentFactory{
         return null;
     }
 
-    //havada kalış süresini azamiye çıkarmak için burada mühimmat eklemiyoruz.
+    //havada kalış süresini azamiye çıkarmak için bu aşamada mühimmat eklemiyoruz.
 }
