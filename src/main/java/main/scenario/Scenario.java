@@ -102,21 +102,29 @@ public class Scenario implements Cloneable{
 
     @Override
     public Scenario clone() {
-        Scenario scenario = null;
+        Scenario cloned = null;
         try {
-            scenario = (Scenario) super.clone();
+            cloned = (Scenario) super.clone();
 
-            scenario.uavs = new ArrayList<>();
-            for (UAV u : this.uavs) {
-                scenario.uavs.add(u.clone());
+            if (this.mission != null) {
+                cloned.mission = this.mission.clone();
             }
 
-            scenario.targets = new ArrayList<>();
-            for (Target t : this.targets) {
-                scenario.targets.add(t.clone());
+            if (this.uavs != null) {
+                cloned.uavs = new ArrayList<>();
+                for (UAV uav : this.uavs) {
+                    cloned.uavs.add(uav.clone());
+                }
             }
 
-            return scenario;
+            if (this.targets != null) {
+                cloned.targets = new ArrayList<>();
+                for (Target target : this.targets) {
+                    cloned.targets.add(target.clone());
+                }
+            }
+
+            return cloned;
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException("An error occurred while copying the Scenario", e);
         }

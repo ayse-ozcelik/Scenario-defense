@@ -110,4 +110,32 @@ public class NaiveScenarioGeneratorTest {
      }
 
 
+     @Test
+     public void testScenarioCloningIsDeepAndIndependent() {
+         ScenarioManager manager = ScenarioManager.getInstance();
+
+         Scenario scenario1 = manager.generateScenario();
+         Scenario scenario2 = manager.generateScenario();
+
+         assertNotNull(scenario1);
+         assertNotNull(scenario2);
+         assertNotSame(scenario1, scenario2, "Scenarios must NOT be the same instance in memory!");
+
+         assertNotNull(scenario1.getMission(), "Mission must not be null");
+         assertNotSame(scenario1.getMission(), scenario2.getMission(),
+                 "Mission objects must not reside in the same RAM address; they must be independent copies.");
+
+         if (!scenario1.getUavs().isEmpty() && !scenario2.getUavs().isEmpty()) {
+             // ID değiştirerek bağımsızlık testi yapıyoruz
+             scenario1.getUavs().get(0).setId("MODIFIED-ID-999");
+
+             assertNotEquals(
+                     scenario1.getUavs().get(0).getId(),
+                     scenario2.getUavs().get(0).getId(),
+                     "The change in Scenario 1 should not affect Scenario 2!"
+             );
+         }
+
+     }
+
 }

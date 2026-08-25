@@ -15,11 +15,11 @@ public class ReconMissionComponentFactory implements IMissionComponentFactory{
 
     @Override
     public UAV createUAV() {
-        return prototypeUAV;
+        return prototypeUAV.clone();
     }
     @Override
     public Sensor createSensor() {
-        return prototypeSensor;
+        return prototypeSensor.clone();
     }
 
     @Override

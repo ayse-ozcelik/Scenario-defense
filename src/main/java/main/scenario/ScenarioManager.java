@@ -4,6 +4,7 @@ import main.factory.AttackMissionComponentFactory;
 import main.factory.IMissionComponentFactory;
 import main.target.TargetFactory;
 import main.validator.ScenarioValidator;
+import main.mission.*;
 
 public class ScenarioManager {
 
@@ -21,7 +22,15 @@ public class ScenarioManager {
         IMissionComponentFactory attackFactory = new AttackMissionComponentFactory();
         TargetFactory targetFactory = new TargetFactory();
 
+        Mission baseMission = new Mission(
+                MissionType.ATTACK,
+                "Operasyonel Devriye",
+                "Açık Hava",
+                RangeCategory.MEDIUM
+        );
+
         baseScenarioPrototype = new Scenario.ScenarioBuilder()
+                .setMission(baseMission)
                 .addUAV(attackFactory.createUAV())
                 .addTarget(targetFactory.createFixedTarget())
                 .build();

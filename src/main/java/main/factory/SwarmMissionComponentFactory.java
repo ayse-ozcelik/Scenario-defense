@@ -15,16 +15,16 @@ public class SwarmMissionComponentFactory implements IMissionComponentFactory{
     private static final Munition prototypeMunition = new LightMunition("M-LIGHT", "MAM-L", 22, 15);
     @Override
     public UAV createUAV() {
-        return prototypeUAV;
+        return prototypeUAV.clone();
     }
 
     @Override
     public Sensor createSensor() {
-        return prototypeSensor;
+        return prototypeSensor.clone();
     }
 
     @Override
     public Munition createMunition() {
-        return prototypeMunition;
+        return prototypeMunition.clone();
     }
 }

@@ -1,7 +1,9 @@
 package main.mission;
 import main.mission.MissionType;
 import main.mission.RangeCategory;
-public class Mission {
+import main.target.Target;
+
+public class Mission implements Cloneable {
     private MissionType missionType;
     private String condition;
     private String weather;
@@ -26,6 +28,18 @@ public class Mission {
     @Override
     public String toString() {
         return missionType + " Görevi (" + rangeCategory + " menzilli)";
+    }
+    @Override
+    public Mission clone() {
+        Mission mission = null;
+        try {
+            mission = (Mission) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException("An error occurred while copying the mission ", e);
+        }
+
+        return mission;
+
     }
 }
 
