@@ -1,6 +1,6 @@
 ---
 
-## 13. Gün: Deney Protokolü ve Performans Test Planı
+## Deney Protokolü ve Performans Test Planı
 
 Bu protokol, **Prototype Pattern** (Klonlama) yaklaşımının **Naive/Baseline** (Sıfırdan `new` ile oluşturma) yaklaşımına göre sunduğu performans, bellek ve işleme hacmi avantajlarını bilimsel olarak ölçmek amacıyla hazırlanmıştır.
 
