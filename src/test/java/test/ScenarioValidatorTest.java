@@ -31,6 +31,7 @@ public class ScenarioValidatorTest {
     public void testReconUAVWithMunitionFailsValidation() {
         ReconMissionComponentFactory reconFactory = new ReconMissionComponentFactory();
         AttackMissionComponentFactory attackFactory = new AttackMissionComponentFactory();
+        TargetFactory targetFactory=new TargetFactory();
 
         UAV reconUAV = reconFactory.createUAV();
         Munition heavyMunition = attackFactory.createMunition();
@@ -43,6 +44,7 @@ public class ScenarioValidatorTest {
         Scenario invalidScenario = new Scenario.ScenarioBuilder()
                 .setMission(mission)
                 .addUAV(reconUAV)
+                .addTarget(TargetFactory.createFixedTarget()) //sabit hedef verdik
                 .build();
 
         assertFalse(validator.validate(invalidScenario), "A reconnaissance UAV carrying munitions must not pass validation");

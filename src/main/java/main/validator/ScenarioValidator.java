@@ -32,7 +32,7 @@ public class ScenarioValidator {
             }
         }
 
-        System.out.println("The scenario is available, for now");
+        //System.out.println("The scenario is available, for now");
         return true;
     }
 }
