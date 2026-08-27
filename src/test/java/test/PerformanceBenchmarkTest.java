@@ -22,7 +22,7 @@ public class PerformanceBenchmarkTest{
         //dizi ile döngüde sırasıyla 100, 1000... tane senaryo testi çalışacak
         int iterations = 10;
 
-        System.out.println("\nScale | Method | Avg Time(ms) | Valid Rate(%)");
+        System.out.println("\nScale    |    Method    |    Avg Time(ms)   |   STD Time(ms)  |   Avg Mem(MB)   | Std Mem(MB)    |   Valid Rate(%)");
         System.out.println("---------------------------------------------------------");
 
         for (int n : scales) {
@@ -43,15 +43,18 @@ public class PerformanceBenchmarkTest{
         }
 
         private void measurePerformance(String methodName, int count, int iterations, boolean isPrototype) {
+            double[] times = new double[iterations];
+            double[] memories = new double[iterations];
+
             long totalTime= 0;
-            long totalMemory= 0;
+            double totalMemory= 0;
             int totalValidCount= 0;
 
             for (int iter= 0; iter< iterations; iter++) {
                 System.gc();
                 //işlemin temiz olması için turun başında hafıza temizlendi
-                Runtime runtime= Runtime.getRuntime(); //JVM
-                long startMem= runtime.totalMemory()- runtime.freeMemory();
+                Runtime jvmRunTime= Runtime.getRuntime(); //JVM
+                long startMem= jvmRunTime.totalMemory()- jvmRunTime.freeMemory();
                 long startTime= System.currentTimeMillis();
 
                 List<Scenario> scenarios= new ArrayList<>(count);
@@ -67,10 +70,16 @@ public class PerformanceBenchmarkTest{
                 }
 
                 long endTime= System.currentTimeMillis();
-                long endMem= runtime.totalMemory() - runtime.freeMemory();
+                long endMem= jvmRunTime.totalMemory() - jvmRunTime.freeMemory();
 
-                totalTime+= (endTime - startTime);
+                long runTime= (endTime - startTime);
                 long usedMemBytes= Math.max(0, endMem - startMem);
+                double runMemMb= usedMemBytes / (1024.0*1024.0);
+
+                times[iter]=runTime;
+                memories[iter] = runMemMb;
+
+                totalTime+= runTime;
                 totalMemory+= usedMemBytes;
                 totalValidCount+= validInThisRun;
             }
@@ -79,8 +88,17 @@ public class PerformanceBenchmarkTest{
             double avgMemMb= (totalMemory / (double) iterations) / (1024.0 * 1024.0);
             double avgValidRate= ((double) totalValidCount / (count * iterations)) * 100.0;
 
-            System.out.printf("%-8d | %-18s | %-14.2f | %-15.2f | %-11.1f%%\n",
-                    count, methodName, avgTimeMs, avgMemMb, avgValidRate);
-        }
+            double sumSqTime = 0;
+            double sumSqMem = 0;
+            for (int i = 0; i < iterations; i++) {
+                sumSqTime += Math.pow(times[i] - avgTimeMs, 2);
+                sumSqMem += Math.pow(memories[i] - avgMemMb, 2);
+            }
+            double stdTimeMs = Math.sqrt(sumSqTime / iterations);
+            double stdMemMb = Math.sqrt(sumSqMem / iterations);
+
+            System.out.printf("%-8d | %-18s | %-12.2f | %-12.2f | %-14.2f | %-14.2f | %-11.1f%%\n",
+                    count, methodName, avgTimeMs, stdTimeMs, avgMemMb, stdMemMb, avgValidRate);
+    }
 }
 

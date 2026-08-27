@@ -1,6 +1,5 @@
 package main.scenario;
 
-import main.naiveScenarioGenerator.NaiveScenarioGenerator;
 import main.UAV.*;
 import main.mission.*;
 import main.target.*;

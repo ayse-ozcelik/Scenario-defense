@@ -6,9 +6,8 @@ import main.target.TargetFactory;
 import main.validator.ScenarioValidator;
 import main.mission.*;
 
-public class ScenarioManager {
+public class ScenarioManager { //singleton mantığıyla çalışacak class:
 
-    //singleton mantığıyla çalışan class:
     private static ScenarioManager instance;
     private static Scenario baseScenarioPrototype;
 
