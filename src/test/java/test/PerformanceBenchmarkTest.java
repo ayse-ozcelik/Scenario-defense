@@ -22,8 +22,7 @@ public class PerformanceBenchmarkTest{
         //dizi ile döngüde sırasıyla 100, 1000... tane senaryo testi çalışacak
         int iterations = 10;
 
-        System.out.println("\nScale    |    Method    |    Avg Time(ms)   |   STD Time(ms)  |   Avg Mem(MB)   | Std Mem(MB)    |   Valid Rate(%)");
-        System.out.println("---------------------------------------------------------");
+        System.out.println("\nScale    | Method             | Avg Time(ms) | STD Time(ms) | Throughput(op/s) | Avg Mem(MB)   | Std Mem(MB)    | Valid Rate(%)");        System.out.println("---------------------------------------------------------");
 
         for (int n : scales) {
             measurePerformance("Baseline(new)", n, iterations, false); //parametreler: metin,sayı, iterasyon sayısı, boolean
@@ -87,6 +86,7 @@ public class PerformanceBenchmarkTest{
             double avgTimeMs= totalTime / (double) iterations;
             double avgMemMb= (totalMemory / (double) iterations) / (1024.0 * 1024.0);
             double avgValidRate= ((double) totalValidCount / (count * iterations)) * 100.0;
+            double throughput = avgTimeMs > 0 ? (count / (avgTimeMs / 1000.0)) : (count * 1000.0);
 
             double sumSqTime = 0;
             double sumSqMem = 0;
@@ -97,8 +97,8 @@ public class PerformanceBenchmarkTest{
             double stdTimeMs = Math.sqrt(sumSqTime / iterations);
             double stdMemMb = Math.sqrt(sumSqMem / iterations);
 
-            System.out.printf("%-8d | %-18s | %-12.2f | %-12.2f | %-14.2f | %-14.2f | %-11.1f%%\n",
-                    count, methodName, avgTimeMs, stdTimeMs, avgMemMb, stdMemMb, avgValidRate);
+            System.out.printf("%-8d | %-18s | %-12.2f | %-12.2f | %-16.2f | %-13.2f | %-14.2f | %-11.1f%%\n",
+                    count, methodName, avgTimeMs, stdTimeMs, throughput, avgMemMb, stdMemMb, avgValidRate);
     }
 }
 

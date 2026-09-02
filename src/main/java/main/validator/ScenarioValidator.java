@@ -10,6 +10,7 @@ public class ScenarioValidator {
         //Güvenlik: Senaryo null ise direkt false döndür
         if (scenario == null) return false;
 
+
         //İHA kontrolü
         if (scenario.getUavs() == null || scenario.getUavs().isEmpty()) {
             System.out.println("Can not found the UAV");
@@ -19,6 +20,10 @@ public class ScenarioValidator {
         //Hedef kontrolü
         if (scenario.getTargets() == null || scenario.getTargets().isEmpty()) {
             System.out.println("Can not found the target");
+            return false;
+        }
+
+        if (scenario.getMission() == null) {
             return false;
         }
 
