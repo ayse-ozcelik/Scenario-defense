@@ -64,75 +64,50 @@ Bu protokol, **Prototype Pattern** (Klonlama) yaklaşımının **Naive/Baseline*
    Yarı deneysel protokolümüzdeki *"10 tekrar çalıştırma ve ortalama alma"* yöntemi ile JIT Warm-up işlemleri, sistemin zaman ve bellek performansını ölçen **Performans Benchmark** testlerimize aittir. **Gün 16 Kural İhlali Analizi** kapsamında ise süre/bellek değerlerinden bağımsız olarak üretilen senaryoların mantıksal iş kurallarına (Valid / Invalid) uygunluğu incelenmiştir.
 
 ---
+## Gün 17 - Süre, Throughput ve Bellek Analizi (Sabit Heap Ölçümü)
 
-## Gün 17 - Süre, Throughput ve Bellek Analizi (Adil Benchmark)
+### Metodolojik Yapı ve Test Koşulları
+Akademik standartlara uygun ve izole bir mikro-benchmark elde etmek amacıyla test ortamı aşağıdaki şartlarda koşturulmuştur:
+1. **İçerik ve Karmaşıklık Eşitliği:** `Baseline (new)` yöntemi, arka planda klonlama yapan yapılardan tamamen arındırılmıştır. `Baseline` tarafında nesne ağacı doğrudan saf `new` anahtar kelimeleriyle sıfırdan kurulmakta; `Prototype (clone)` tarafında ise aynı nesne ağacı `.clone()` ile türetilmektedir. Her iki yöntemde de nesne ağacı tam olarak 1 Mission, 1 UAV, 1 Sensor, 1 Munition ve 1 Target içermektedir.
+2. **Ölçüm Hassasiyeti ve Ortam İzolasyonu:** Ölçümlerde `System.nanoTime()` kullanılmış, gürültüyü (noise) sönümlemek adına iterasyon sayısı $30$'a çıkarılmıştır. Bellek genişleme overhead'ini önlemek amacıyla JVM heap boyutu `-Xms1024m -Xmx1024m` parametreleriyle $1\text{ GB}$'a sabitlenmiştir. Her iki yöntem de aynı `ScenarioValidator` örneği üzerinden (`validator.validate(scenario)`) doğrulama sürecinden geçirilmiştir.
 
-### Metodolojik İyileştirme ve Test Koşulları
-Akademik standartlara uygun ve savunulabilir bir karşılaştırma elde etmek amacıyla test metodolojisinde iki temel düzeltme yapılmıştır:
-1. **İçerik ve Karmaşıklık Eşitliği:** `Baseline (new)` ve `Prototype (clone)` yöntemlerinin her ikisi de birebir aynı sayıda ve türde alt nesneye (UAV, Target, Sensor, Munition) sahip senaryolar üretecek şekilde eşitlenmiştir. Rastgele nesne üretimi kaldırılarak saf `new` ve `clone()` farkı ölçülmüştür.
-2. **Hassas Zaman Ölçümü:** Ölçüm çözünürlüğünü artırmak adına `System.currentTimeMillis()` yerine nanosaniye hassasiyetindeki `System.nanoTime()` API'sine geçilmiştir.
+### Performans ve Bellek Test Sonuçları (30 İterasyon Ortalama ve STD)
 
-### Performans ve Bellek Test Sonuçları (10 İterasyon Ortalama ve STD)
-
-Aşağıdaki veriler eşitlenmiş içerik ve JVM Warm-up sonrasında 10 tekrarın ortalaması (Mean) ve Standart Sapması (STD) hesaplanarak elde edilen **güncel konsol çıktılarıdır**:
-
-| Scale | Method | Avg Time (ms) | STD Time (ms) | Throughput (op/s) | Avg Mem (MB) | STD Mem (MB) | Valid Rate (%) |
+| Scale | Method | Avg Time (ms) | STD Time (ms) | Throughput (op/s) | Avg Mem (MB) | Std Mem (MB) | Valid Rate (%) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **100** | Baseline(new) | 0,18 | 0,08 | 542.034,80 | 0,08 | 0,03 | 100,0% |
-| **100** | Prototype(clone) | 0,08 | 0,03 | 1.320.829,48 | 0,06 | 0,01 | 100,0% |
-| **1000** | Baseline(new) | 0,47 | 0,07 | 2.114.164,90 | 0,82 | 0,07 | 100,0% |
-| **1000** | Prototype(clone) | 0,29 | 0,08 | 3.501.155,38 | 0,44 | 0,00 | 100,0% |
-| **10000** | Baseline(new) | 11,91 | 3,95 | 839.953,57 | 7,36 | 0,38 | 100,0% |
-| **10000** | Prototype(clone) | 0,44 | 0,14 | 22.687.054,77 | 3,53 | 0,02 | 100,0% |
-| **100000** | Baseline(new) | 62,16 | 19,55 | 1.608.861,09 | 75,70 | 6,33 | 100,0% |
-| **100000** | Prototype(clone) | 27,41 | 7,25 | 3.648.933,22 | 36,50 | 2,62 | 100,0% |
+| **100** | Baseline(new) | 0,25 | 0,13 | 408.057,78 | 0,57 | 0,21 | 100,0% |
+| **100** | Prototype(clone) | 0,21 | 0,06 | 487.709,40 | 0,55 | 0,15 | 100,0% |
+| **1000** | Baseline(new) | 0,86 | 0,07 | 1.161.053,80 | 1,09 | 0,19 | 100,0% |
+| **1000** | Prototype(clone) | 1,05 | 0,29 | 948.649,69 | 1,15 | 0,23 | 100,0% |
+| **10000** | Baseline(new) | 1,81 | 0,15 | 5.510.299,97 | 7,00 | 0,00 | 100,0% |
+| **10000** | Prototype(clone) | 1,44 | 0,29 | 6.937.411,00 | 5,50 | 0,00 | 100,0% |
+| **100000** | Baseline(new) | 12,78 | 7,12 | 7.825.736,52 | 68,38 | 0,78 | 100,0% |
+| **100000** | Prototype(clone) | 7,69 | 0,67 | 13.002.914,82 | 52,00 | 0,00 | 100,0% |
 
 ---
 
-### Karşılaştırma Grafikleri (ASCII Metin)
-
-**1. Çalışma Süresi Karşılaştırması (Ortalama Zaman - Düşük Değer İyidir)**
-
-* **Baseline (new):** `[==================================================]` **62.16 ms**
-* **Prototype (clone):** `[======================]` **27.41 ms** *(~2.27 Kat Daha Hızlı)*
-
-**2. Throughput / İşleme Hacmi Karşılaştırması (Yüksek Değer İyidir)**
-
-* **Baseline (new):** `[======================]` **1.608.861,09 op/s**
-* **Prototype (clone):** `[==================================================]` **3.648.933,22 op/s** *(~2.27 Kat Daha Yüksek Hacim)*
-
-**3. Bellek Tüketimi Karşılaştırması (Düşük Değer İyidir)**
-
-* **Baseline (new):** `[==================================================]` **75.70 MB**
-* **Prototype (clone):** `[========================]` **36.50 MB** *(~2.07 Kat Daha Az Bellek Tüketimi)*
-
----
-
-### Analiz Değerlendirmesi
-
-1. **Zaman Performansı:** Senaryo içerikleri ve nesne sayıları tamamen eşitlendiğinde dahi Prototype Pattern (`.clone()`) yaklaşımı; yapıcı metod zincirlerini (constructor) sıfırdan çalıştırma ve alan atama yükünü bypass ettiği için $N=100.000$ ölçeğinde **27.41 ms** ile **~2.27 kat daha hızlı** tamamlanmıştır.
-2. **Bellek Kullanımı:** Birebir aynı nesne hiyerarşisine sahip senaryo üretiminde Baseline yöntemi **75.70 MB** bellek tüketirken Prototype yaklaşımı **36.50 MB** harcayarak yaklaşık yarı yarıya bellek tasarrufu sağlamıştır.
-3. **Standart Sapma ve İstatistiksel İstikrar:** `System.nanoTime()` hassasiyetinde gerçekleştirilen testlerde Prototype yönteminin bellek standart sapması ($2.62$ MB vs $6.33$ MB) belirgin şekilde düşük çıkmıştır. Bu durum, klonlama yaklaşımının bellek tahsisinde donanım ve yük dalgalanmalarından daha az etkilenerek öngörülebilir bir performans sunduğunu kanıtlamaktadır.
-
----
-
-## Gün 18 - Sonuçların Yorumlanması, Mimari Analiz ve Sınırlamalar (Limitations)
+## Gün 18 - Sonuçların Yorumlanması, Mimari Analiz, Sınırlamalar ve Öneriler
 
 ### 1. Elde Edilen Bulgular (Findings)
-* **Ölçeklenebilir Hız ve İşleme Hacmi:** Adil benchmark koşullarında $N=100.000$ ölçeğinde `Prototype (clone)` yöntemi **27,41 ms** sürede **3.648.933,22 op/s** işleme hacmine ulaşırken; `Baseline (new)` yöntemi **62,16 ms** sürede **1.608.861,09 op/s** üretebilmiştir. Prototype deseni **~2,27 kat zaman ve throughput kazancı** sunmuştur.
-* **Bellek Tüketimi ve GC Baskısı:** Birebir aynı nesne hiyerarşisinde Prototype deseni **36,50 MB** bellek harcarken Baseline yöntemi **75,70 MB** harcamıştır. Prototip kullanımı bellek harcamasını **~2,07 kat azaltarak** JVM üzerindeki Çöp Toplayıcı (Garbage Collector) yükünü belirgin şekilde hafifletmiştir.
-* **İstatistiki Kararlılık:** $N=100.000$ ölçeğinde bellek standart sapması Baseline yönteminde **6,33 MB** iken Prototype yönteminde **2,62 MB** seviyesindedir. Bu durum klonlama yaklaşımının daha öngörülebilir bir bellek haritası sunduğunu göstermektedir.
+* **Zaman Performansı:** Heap sabitlendiğinde $N=100.000$ ölçeğinde Prototype deseni ortalama $7,69\text{ ms}$ tamamlama süresiyle Baseline yöntemine ($12,78\text{ ms}$) göre belirgin bir hız avantajı (yaklaşık **$1,66\times$ hızlanma**) sunmuştur. Prototype tarafındaki standart sapmanın ($0,67\text{ ms}$) düşük kalması, hız avantajının bu ölçüm koşullarında düşük değişkenlikle gözlendiğini göstermektedir.
+* **Bellek Tüketimi (Tutarlı Bulgu):** Sabit heap altında da bellek tasarrufu trendi korunmuştur. $N=100.000$ ölçeğinde Prototype yaklaşımı $52,00\text{ MB}$ ortalama bellek harcarken, Baseline $68,38\text{ MB}$ tüketmiştir. Prototype deseni **$16,38\text{ MB}$ (~%24) net bellek tasarrufu** sağlamış ve $STD = 0,00\text{ MB}$ ile yüksek kararlılık sergilemiştir.
+* **Düşük Ölçek Metrikleri:** $N \le 1.000$ ölçeklerindeki sub-milisaniye sürelerde iki yöntem birbirine yakın sonuçlar üretmektedir. Başlangıç heap boyutunun $1\text{ GB}$'a sabitlenmesi nedeniyle küçük ölçeklerdeki ($N=100$) bellek taban çizgisi önceki serilere göre bir miktar yüksek ($~0,55-0,57\text{ MB}$) ölçülmüştür.
 
 ### 2. Mimarinin Güçlü Yönleri (Strengths)
-* **Constructor Zincirinin Bypass Edilmesi:** Nesne ağacı karmaşıklaştıkça sıfırdan `new` ile yapılan atamalar yerine bellek kopyalamasının tercih edilmesi performans kazancının ana nedenidir.
-* **Gerçek Derin Kopyalama (Deep Copy):** `UAV.clone()` ve `Scenario.clone()` metotları iç koleksiyonları ve referansları tek tek klonlayarak tam nesne bağımsızlığı sağlar. Bir senaryodaki değişiklik diğer senaryoları etkilemez.
-* **Bütünsel Tasarım Deseni Entegrasyonu:** Builder, Abstract Factory, Singleton ve Prototype desenlerinin birlikte kullanımı modüler ve genişletilebilir bir mimari sağlamıştır.
+* **Bellek Alanı Verimliliği:** Alt bileşenlerin tek tek yapıcı metotlarının çağrılması yerine `.clone()` ile bellek kopyalaması yapılması, yüksek hacimli yük altında belirgin bir bellek tasarrufu ve düşük bellek dalgalanması sunar.
+* **Gerçek Derin Kopyalama (Deep Copy):** `Scenario.clone()` ve `UAV.clone()` metotlarının iç koleksiyonları tek tek klonlaması, türetilen nesneler arasında tam bağımsızlık sağlar.
 
-### 3. Mimarinin Zayıf Yönleri ve Sınırlamaları (Limitations)
-* **Düşük Ölçeklerde Önemsizleşen Fark:** $N=100$ ve $N=1.000$ ölçeklerinde yöntemler arasındaki zaman farkı $1\text{ ms}$'nin altındadır ($0,18\text{ ms}$ vs $0,08\text{ ms}$). Düşük hacimli uygulamalarda Prototip deseni kurmak mimari karmaşıklığa (Over-engineering) yol açabilir.
-* **Derin Kopyalama (Deep Copy) Bakım Maliyeti:** Alan sınıflarına eklenecek yeni koleksiyon veya referans tipi alanların `clone()` metotlarına manuel dahil edilmesi gerekir. İhmal edilen alanlar sığ kopyalama (Shallow Copy) hatalarına ve veri çakışmalarına yol açabilir.
-* **Singleton'da Thread-Safety Eksikliği:** `ScenarioManager.getInstance()` metodu senkronizasyon (`synchronized` / *double-checked locking*) barındırmaz. Çok iş parçacıklı (multi-thread) ortamlarda yarış durumuna (*race condition*) açıktır.
-* **Manuel GC Çağrılarına Bağımlılık:** Benchmark testlerindeki bellek ölçümleri `System.gc()` çağrısına dayanır; GC'nin tetiklenme garantisi JVM yönetimine bağlı bir kısıttır.
+### 3. Mimarinin Zayıf Yönleri ve Sınırlamalar (Limitations)
+* **Ortam Bağımlılığı ve JIT Dinamikleri:** Masaüstü geliştirme ortamlarında arka plan yükleri ve JIT derleyicisinin (C1/C2) anlık kararları, çalıştırmalar arasında genel süre seviyelerinin değişmesine yol açabilmektedir.
+* **Düşük Ölçeklerde Önemsizleşen Fark:** $N \le 1.000$ gibi küçük ölçeklerde yöntemler arasındaki fark milisaniyenin altında kaldığı için Prototip deseni kullanımı gereksiz mimari karmaşıklık (*Over-engineering*) oluşturabilir.
+* **Derin Kopyalama Bakım Maliyeti:** Alan sınıflarına yeni bir koleksiyon eklendiğinde `clone()` metotlarının manuel olarak güncellenmesi gerekir.
+* **Singleton Thread-Safety Risk:** `ScenarioManager.getInstance()` yapısı senkronize değildir. Çok iş parçacıklı (*multi-thread*) ortamlarda yarış durumuna (*race condition*) açıktır.
 
-### 4. Genel Sonuç
+### 4. Öneriler (Recommendations)
+* **Yüksek Hacimli Üretimde Prototype Tercihi:** Yüz binlerce senaryonun üretildiği simülasyon sistemlerinde `Prototype Pattern` (`.clone()`) kullanımı, hem süre hem de bellek tasarrufu nedeniyle tercih edilmelidir.
+* **Singleton'ın Thread-Safe Hale Getirilmesi:** `ScenarioManager.getInstance()` metoduna `synchronized` veya çift kontrollü kilitleme (*double-checked locking*) eklenmelidir.
+* **Clone Metotlarının Birim Testleri:** `UAV` ve `Scenario` sınıflarına yeni alanlar eklendiğinde derin kopyalamayı doğrulayan birim testleri yazılmalıdır.
+
+
+### 5. Genel Sonuç
 Elde edilen deneysel ve mimari veriler; yüksek hacimli senaryo üretimi gerektiren simülasyon sistemlerinde **Prototype Pattern** kullanımının, iş kuralı doğruluğundan ödün vermeksizin zaman ve işleme hacminde **~2,27 kat**, bellek kullanımında ise **~2,07 kat** tutarlı bir avantaj sağladığını ortaya koymaktadır.

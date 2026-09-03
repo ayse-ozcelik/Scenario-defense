@@ -19,7 +19,7 @@ public class PerformanceBenchmarkTest {
         System.out.println("Benchmark starting...");
         runWarmUp();
         int scales[] = {100, 1000, 10000, 100000};
-        int iterations = 10;
+        int iterations = 30;
 
         System.out.println("\nScale    | Method             | Avg Time(ms) | STD Time(ms) | Throughput(op/s) | Avg Mem(MB)   | Std Mem(MB)    | Valid Rate(%)");
         System.out.println("-----------------------------------------------------------------------------------------------------------------------------");

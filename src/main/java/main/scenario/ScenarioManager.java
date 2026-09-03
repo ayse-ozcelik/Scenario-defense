@@ -5,6 +5,10 @@ import main.factory.IMissionComponentFactory;
 import main.target.TargetFactory;
 import main.validator.ScenarioValidator;
 import main.mission.*;
+import main.UAV.*;
+import main.target.*;
+import main.sensor.*;
+import main.munition.*;
 
 public class ScenarioManager { //singleton mantığıyla çalışacak class:
 
@@ -28,14 +32,21 @@ public class ScenarioManager { //singleton mantığıyla çalışacak class:
                 RangeCategory.MEDIUM
         );
 
+        UAV uav = attackFactory.createUAV();     // clone() ile prototypeUAV kopyalanır
+        Sensor sensor = attackFactory.createSensor(); // clone() ile prototypeSensor kopyalanır
+        Munition munition = attackFactory.createMunition(); // clone() ile prototypeMunition kopyalanır
+
+        uav.addSensor(sensor);
+        uav.addMunition(munition);
+
         baseScenarioPrototype = new Scenario.ScenarioBuilder()
                 .setMission(baseMission)
-                .addUAV(attackFactory.createUAV())
+                .addUAV(uav)
                 .addTarget(targetFactory.createFixedTarget())
                 .build();
+    }
         //target factory ile bir hedef oluşturuldu, attack factory ile uav oluşturuldu
         //birleştirildi ve base scenario elde edildi
-    }
     public Scenario generateScenario() {
         Scenario scenario = baseScenarioPrototype.clone();
 

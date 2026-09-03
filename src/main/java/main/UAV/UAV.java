@@ -57,7 +57,7 @@ public abstract class UAV implements Cloneable {
     }
 
     public void addMunition(Munition munition){
-       this.munitions.add(munition);
+        this.munitions.add(munition);
     }
     public List<Sensor> getSensors(){ return sensors;
     }
