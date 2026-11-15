@@ -29,16 +29,13 @@ public class NaiveScenarioGenerator {
 
         // 3. AttackUAV (prototypeUAV ile birebir aynı değerler, saf new ile)
         UAV uav = new AttackUAV("UAV-ATTACK", "Bayraktar TB2", 220.0, 200.0, 4);
-        uav.setId(uav.getId() + "-1");
 
         // 4. RadarSensor (prototypeSensor ile birebir aynı değerler, saf new ile)
         Sensor sensor = new RadarSensor("S-RADAR", "AESA Radar", 20.0, 30.0, 430.0);
-        sensor.setId(sensor.getId() + "-1-1");
         uav.addSensor(sensor);
 
         // 5. HeavyMunition (prototypeMunition ile birebir aynı değerler, saf new ile)
         Munition munition = new HeavyMunition("M-HEAVY", "MK-82", 230, 500.0);
-        munition.setId(munition.getId() + "-1-1");
         uav.addMunition(munition);
 
         // 6. ScenarioBuilder ile İnşa Etme

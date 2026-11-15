@@ -45,8 +45,8 @@ public class ScenarioManager { //singleton mantığıyla çalışacak class:
                 .addTarget(targetFactory.createFixedTarget())
                 .build();
     }
-        //target factory ile bir hedef oluşturuldu, attack factory ile uav oluşturuldu
-        //birleştirildi ve base scenario elde edildi
+    //target factory ile bir hedef oluşturuldu, attack factory ile uav oluşturuldu
+    //birleştirildi ve base scenario elde edildi
     public Scenario generateScenario() {
         Scenario scenario = baseScenarioPrototype.clone();
 
@@ -56,6 +56,11 @@ public class ScenarioManager { //singleton mantığıyla çalışacak class:
         } else {
             return null;
         }
+    }
+
+    // Benchmark için: dâhili doğrulama yapmadan yalnızca prototipi klonlar
+    public Scenario generateScenarioWithoutValidation() {
+        return baseScenarioPrototype.clone();
     }
 
     public static ScenarioManager getInstance() {
