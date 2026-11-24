@@ -1,0 +1,16 @@
+Benchmark starting...
+JVM Warm-up is running (20000 iterations per method)...
+Warm-up has done
+
+Scale    | Method             | Avg Time(ms) | STD Time(ms) | Throughput(op/s) | Avg Mem(MB)   | Std Mem(MB)    | Valid Rate(%)
+-----------------------------------------------------------------------------------------------------------------------------
+100      | Baseline(new)      | 0,12         | 0,11         | 829072,82        | 0,07          | 0,02           | 100,0      %
+100      | Prototype(clone)   | 0,20         | 0,37         | 503685,30        | 0,08          | 0,01           | 100,0      %
+1000     | Baseline(new)      | 0,10         | 0,04         | 9639173,60       | 0,55          | 0,02           | 100,0      %
+1000     | Prototype(clone)   | 0,15         | 0,18         | 6579957,45       | 0,55          | 0,01           | 100,0      %
+10000    | Baseline(new)      | 9,84         | 6,53         | 1015904,32       | 5,44          | 0,19           | 100,0      %
+10000    | Prototype(clone)   | 12,78        | 6,40         | 782169,46        | 5,35          | 0,13           | 100,0      %
+100000   | Baseline(new)      | 44,92        | 5,70         | 2226383,58       | 55,87         | 11,47          | 100,0      %
+100000   | Prototype(clone)   | 48,12        | 7,64         | 2077963,96       | 53,82         | 0,48           | 100,0      %
+
+Process finished with exit code 0
