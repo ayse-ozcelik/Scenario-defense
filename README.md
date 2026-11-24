@@ -65,8 +65,5 @@ Eşit iş yükü altında sıfırdan nesne inşası (`Baseline - new`) ile klonl
 
 ## 4. Kurulum ve Çalıştırma
 
-Projeyi yerel ortamınızda derlemek ve testleri çalıştırmak için Maven Wrapper kullanabilirsiniz:
-
-```bash
-# Projeyi derleme ve tüm birim/benchmark testlerini çalıştırma
-./mvnw test
+Ölçümler, IntelliJ IDEA'da `test.PerformanceBenchmarkTest.runFullBenchmarkSuite` testi çalıştırılarak alınmıştır. Run Configuration > VM options alanına `-Xms1024m -Xmx1024m` yazılmıştır. 
+Ham çıktı: `results/benchmark_output.txt`.
